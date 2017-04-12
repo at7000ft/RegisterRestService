@@ -1,6 +1,8 @@
 # Registration Web Service
 ####This is a Springboot/H2/Java Registration Web Service code challenge implementing four API
 
+####Download project from github using local git:
+>git clone https://github.com/at7000ft/RegisterRestService
 
 ###Build an executable jar using Maven:
 >cd RegisterRestService
@@ -12,7 +14,7 @@
 
 >java -jar RegisterRestService-1.0-SNAPSHOT.jar
 
-###Open H2 console to view all Registration records in browser (connect to jdbc:h2:mem:testdb):
+###Open H2 console to view all Registration records in browser, auto-loaded for testing (connect to jdbc:h2:mem:testdb):
 >http://localhost:8080/console
 
 ###Get All Registrations:
