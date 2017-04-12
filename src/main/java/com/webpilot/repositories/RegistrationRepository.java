@@ -11,4 +11,5 @@ import org.springframework.data.repository.CrudRepository;
  * @author RGH
  */
 public interface RegistrationRepository extends CrudRepository<Registration, Integer> {
+    Registration findByUserName(String userName);
 }

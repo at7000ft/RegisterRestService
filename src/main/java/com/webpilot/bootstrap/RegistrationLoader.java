@@ -9,10 +9,12 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 
 /**
  * Title: RegistrationLoader
- * Description: load default registrations on startup for testing
+ * Description: load default registrations on startup for testing only
  * Date: 4/11/17
  *
  * @author RGH
@@ -21,20 +23,16 @@ import org.springframework.stereotype.Component;
 public class RegistrationLoader implements ApplicationListener<ContextRefreshedEvent>  {
     private static final Logger log = LoggerFactory.getLogger(RegistrationLoader.class);
 
-    private RegistrationRepository registrationRepository;
-
-
     @Autowired
-    public void setProductRepository(RegistrationRepository registrationRepository) {
-        this.registrationRepository = registrationRepository;
-    }
+    private RegistrationRepository registrationRepository;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         log.info("onApplicationEvent: called");
-        Registration reg1 = new Registration("joe1", "joe1@gmail.com",null);
+        Registration reg1 = new Registration("joe1", "joe1@gmail.com",new Date());
         registrationRepository.save(reg1);
-        Registration reg2 = new Registration("joe2", "joe2@gmail.com",null);
+
+        Registration reg2 = new Registration("joe2", "joe2@gmail.com",new Date());
         registrationRepository.save(reg2);
     }
 }

@@ -10,10 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
- * Title:
- * Description:
+ * Title: RegistrationController
+ * Description: Registration controller
  * Date: 4/11/17
  *
  * @author RGH
@@ -23,42 +24,42 @@ public class RegistrationController {
     private static final Logger log = LoggerFactory.getLogger(RegistrationController.class);
 
     @Autowired
-    RegistrationService registrationService;
+    private RegistrationService registrationService;
 
-    //Access at http://localhost:8080
     @GetMapping("/")
     @ResponseBody
-    ResponseEntity<Registration> getRegistrations() {
+    ResponseEntity<List<Registration>> getRegistrations() {
         log.debug("getRegistrations: called");
-        Registration reg = new Registration("ace","ace@gmail.com", new Date());
-        return new ResponseEntity<Registration>(reg, HttpStatus.OK);
+        List<Registration> registrations = registrationService.getRegistrations();
+        return new ResponseEntity<>(registrations, HttpStatus.OK);
     }
 
-    //Access at http://localhost:8080/ace
     @GetMapping("/{username}")
     @ResponseBody
     ResponseEntity<Registration> getRegistration(@PathVariable String username) {
         log.debug("getRegistrations: called with " + username);
-        Registration reg = new Registration(username,"ace@gmail.com", new Date());
-        return new ResponseEntity<Registration>(reg, HttpStatus.OK);
+        Registration reg = registrationService.getRegistration(username);
+        if (reg == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(reg, HttpStatus.OK);
     }
 
     @DeleteMapping("/{username}")
     @ResponseBody
     ResponseEntity<Registration> deleteRegistration(@PathVariable String username) {
         log.debug("deleteRegistration: called with " + username);
-        Registration reg = new Registration(username,"ace@gmail.com", new Date());
-        return new ResponseEntity<Registration>(reg, HttpStatus.OK);
+        registrationService.deleteRegistration(username);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //curl -H "Content-Type: application/json" -X POST -d '{"userName":"xyz","email":"xyz@gmail.com"}' http://localhost:8080/add
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<Registration> addRegistration(@RequestBody Registration registration) {
         log.debug("getRegistrations: called with " + registration);
-
-        Registration reg = new Registration("ace","ace@gmail.com", new Date());
-        return new ResponseEntity<Registration>(reg, HttpStatus.CREATED);
+        registration.setRegisterDate(new Date());
+        registrationService.addRegistration(registration);
+        return new ResponseEntity<>(registration, HttpStatus.CREATED);
 
     }
 }

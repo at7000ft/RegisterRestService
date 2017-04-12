@@ -1,6 +1,7 @@
 package com.webpilot;
 
 import com.webpilot.domain.Registration;
+import com.webpilot.repositories.RegistrationRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,10 +21,11 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Date;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 /**
@@ -44,14 +46,16 @@ public class RegistrationControllerTest {
 
     private MockMvc mockMvc;
     private HttpMessageConverter mappingJackson2HttpMessageConverter;
-    private String userName = "bdussault";
+    private String userName = "joe1";
 
     @Autowired
     private WebApplicationContext webApplicationContext;
 
     @Autowired
-    void setConverters(HttpMessageConverter<?>[] converters) {
+    private RegistrationRepository registrationRepository;
 
+    @Autowired
+    void setConverters(HttpMessageConverter<?>[] converters) {
         this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream()
                 .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
                 .findAny()
@@ -64,48 +68,58 @@ public class RegistrationControllerTest {
     @Before
     public void setup() throws Exception {
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
+
+        registrationRepository.deleteAll();
+        Registration reg1 = new Registration(userName, userName + "@gmail.com",new Date());
+        registrationRepository.save(reg1);
+
+        Registration reg2 = new Registration("joe2", "joe2@gmail.com",new Date());
+        registrationRepository.save(reg2);
     }
 
-//    @Test
-//    public void userNameNotFound() throws Exception {
-//        mockMvc.perform(get("/george")
-//                .content(this.json(new Registration()))
-//                .contentType(contentType))
-//                .andExpect(status().isNotFound());
-//    }
+    @Test
+    public void userNameNotFound() throws Exception {
+        mockMvc.perform(get("/george")
+                .contentType(contentType))
+                .andExpect(status().isNotFound());
+    }
 
     @Test
     public void readSingleUser() throws Exception {
-        mockMvc.perform(get("/ace"))
+        mockMvc.perform(get("/" + userName))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType));
-
-
     }
 
     @Test
     public void readAllUsers() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(contentType));
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 
     @Test
     public void addUser() throws Exception {
-        String registrationJson = json(new Registration("ace","ace@gmail.com", new Date()));
+        String uname = "ace";
+        String registrationJson = json(new Registration(uname,uname + "@gmail.com", new Date()));
         mockMvc.perform(post("/add").contentType(contentType).content(registrationJson))
                 .andExpect(status().isCreated());
+        Registration registration = registrationRepository.findByUserName(uname);
+        assertNotNull(registration);
     }
 
     @Test
     public void deleteUser() throws Exception {
-        mockMvc.perform(delete("/ace"))
+        mockMvc.perform(delete("/" + userName))
                 .andExpect(status().isOk());
+        Registration registration = registrationRepository.findByUserName(userName);
+        assertNull(registration);
     }
 
 
 
-    protected String json(Object o) throws IOException {
+    private String json(Object o) throws IOException {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
         this.mappingJackson2HttpMessageConverter.write(
                 o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
