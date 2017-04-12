@@ -7,7 +7,7 @@
 
 >mvn clean package
 
-###Run from executable jar:
+###Run from executable jar (requires Java8):
 >cd RegisterRestService/target
 
 >java -jar RegisterRestService-1.0-SNAPSHOT.jar
