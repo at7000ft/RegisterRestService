@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import java.util.Date;
 
 /**
- * Title: Registration
  * Description: Registration domain class
  * Date: 4/11/17
  *

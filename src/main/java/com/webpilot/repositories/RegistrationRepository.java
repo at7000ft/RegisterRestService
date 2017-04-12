@@ -4,7 +4,6 @@ import com.webpilot.domain.Registration;
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * Title: RegistrationRepository
  * Description: SpringData interface for Registration
  * Date: 4/11/17
  *

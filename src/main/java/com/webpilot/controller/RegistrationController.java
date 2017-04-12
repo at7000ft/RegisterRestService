@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Title: RegistrationController
  * Description: Registration controller
  * Date: 4/11/17
  *

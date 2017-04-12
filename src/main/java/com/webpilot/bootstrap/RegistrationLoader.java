@@ -13,8 +13,7 @@ import java.util.Date;
 
 
 /**
- * Title: RegistrationLoader
- * Description: load default registrations on startup for testing only
+ * Description: load default registrations on startup, for testing only
  * Date: 4/11/17
  *
  * @author RGH

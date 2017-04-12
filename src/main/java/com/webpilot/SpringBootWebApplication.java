@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Title: SpringBootWebApplication
  * Description: Start RegisterRestService 
  * Date: 4/11/17
  *

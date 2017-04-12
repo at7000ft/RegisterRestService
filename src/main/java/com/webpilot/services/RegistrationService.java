@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Title: RegistrationService
  * Description: Access H2 db via SpringData RegistrationRepository, no DAOs needed
  * Date: 4/11/17
  *

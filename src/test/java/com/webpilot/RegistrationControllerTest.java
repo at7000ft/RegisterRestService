@@ -29,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 /**
- * Title: RegistrationControllerTest
  * Description: RegistrationController integration test
  * Date: 4/11/17
  *

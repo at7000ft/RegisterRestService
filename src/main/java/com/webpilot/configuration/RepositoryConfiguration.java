@@ -1,7 +1,6 @@
 package com.webpilot.configuration;
 
 /**
- * Title: RepositoryConfiguration
  * Description: Specify entity and repository packages to be scanned for SpringData use.
  * Date: 4/11/17
  *
