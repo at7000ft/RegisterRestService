@@ -3,9 +3,13 @@
 
 
 ###Build an executable jar using Maven:
+>cd RegisterRestService
+
 >mvn clean package
 
 ###Run from executable jar:
+>cd RegisterRestService/target
+
 >java -jar RegisterRestService-1.0-SNAPSHOT.jar
 
 ###Open H2 console to view all Registration records in browser (connect to jdbc:h2:mem:testdb):
