@@ -28,7 +28,6 @@ public class RegistrationController {
     @GetMapping("/")
     @ResponseBody
     ResponseEntity<List<Registration>> getRegistrations() {
-        log.debug("getRegistrations: called");
         List<Registration> registrations = registrationService.getRegistrations();
         return new ResponseEntity<>(registrations, HttpStatus.OK);
     }
@@ -36,7 +35,6 @@ public class RegistrationController {
     @GetMapping("/{username}")
     @ResponseBody
     ResponseEntity<Registration> getRegistration(@PathVariable String username) {
-        log.debug("getRegistrations: called with " + username);
         Registration reg = registrationService.getRegistration(username);
         if (reg == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -47,7 +45,6 @@ public class RegistrationController {
     @DeleteMapping("/{username}")
     @ResponseBody
     ResponseEntity<Registration> deleteRegistration(@PathVariable String username) {
-        log.debug("deleteRegistration: called with " + username);
         registrationService.deleteRegistration(username);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -55,7 +52,6 @@ public class RegistrationController {
     @PostMapping("/add")
     @ResponseBody
     public ResponseEntity<Registration> addRegistration(@RequestBody Registration registration) {
-        log.debug("getRegistrations: called with " + registration);
         registration.setRegisterDate(new Date());
         registrationService.addRegistration(registration);
         return new ResponseEntity<>(registration, HttpStatus.CREATED);
