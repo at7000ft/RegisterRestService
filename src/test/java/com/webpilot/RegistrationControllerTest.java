@@ -78,21 +78,21 @@ public class RegistrationControllerTest {
 
     @Test
     public void userNameNotFound() throws Exception {
-        mockMvc.perform(get("/george")
+        mockMvc.perform(get("/registrations/george")
                 .contentType(contentType))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void readSingleUser() throws Exception {
-        mockMvc.perform(get("/" + userName))
+        mockMvc.perform(get("/registrations/" + userName))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType));
     }
 
     @Test
     public void readAllUsers() throws Exception {
-        mockMvc.perform(get("/"))
+        mockMvc.perform(get("/registrations"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -102,7 +102,7 @@ public class RegistrationControllerTest {
     public void addUser() throws Exception {
         String uname = "ace";
         String registrationJson = json(new Registration(uname,uname + "@gmail.com", new Date()));
-        mockMvc.perform(post("/add").contentType(contentType).content(registrationJson))
+        mockMvc.perform(post("/registrations/add").contentType(contentType).content(registrationJson))
                 .andExpect(status().isCreated());
         Registration registration = registrationRepository.findByUserName(uname);
         assertNotNull(registration);
@@ -110,7 +110,7 @@ public class RegistrationControllerTest {
 
     @Test
     public void deleteUser() throws Exception {
-        mockMvc.perform(delete("/" + userName))
+        mockMvc.perform(delete("/registrations/" + userName))
                 .andExpect(status().isOk());
         Registration registration = registrationRepository.findByUserName(userName);
         assertNull(registration);

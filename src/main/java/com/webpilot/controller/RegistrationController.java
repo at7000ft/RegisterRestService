@@ -19,13 +19,14 @@ import java.util.List;
  * @author RGH
  */
 @RestController
+@RequestMapping("/registrations")
 public class RegistrationController {
     private static final Logger log = LoggerFactory.getLogger(RegistrationController.class);
 
     @Autowired
     private RegistrationService registrationService;
 
-    @GetMapping("/")
+    @GetMapping("")
     @ResponseBody
     ResponseEntity<List<Registration>> getRegistrations() {
         List<Registration> registrations = registrationService.getRegistrations();
