@@ -58,4 +58,6 @@ public class RegistrationController {
         return new ResponseEntity<>(registration, HttpStatus.CREATED);
 
     }
+
+
 }

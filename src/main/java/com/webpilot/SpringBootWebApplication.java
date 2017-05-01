@@ -8,6 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Date: 4/11/17
  *
  * @author RGH
+ *
+ * The @SpringBootApplication annotation is equivalent to using @Configuration,
+ * @EnableAutoConfiguration and @ComponentScan with their default attributes.
  */
 @SpringBootApplication
 public class SpringBootWebApplication {
