@@ -27,6 +27,6 @@
 >curl -X "DELETE" http://localhost:8080/registrations/joe1
 
 
-
+### Added2
 ### Add User Registration:
 >curl -H "Content-Type: application/json" -X POST -d '{"userName":"xyz","email":"xyz@gmail.com"}' http://localhost:8080/registrations/add
